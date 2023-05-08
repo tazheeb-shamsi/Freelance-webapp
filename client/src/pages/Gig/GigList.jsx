@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import { useLocation } from "react-router-dom";
 
-function Gigs() {
+function GigList() {
   const [sort, setSort] = useState("sales");
   const [open, setOpen] = useState(false);
   const minRef = useRef();
@@ -85,4 +85,4 @@ function Gigs() {
   );
 }
 
-export default Gigs;
+export default GigList;

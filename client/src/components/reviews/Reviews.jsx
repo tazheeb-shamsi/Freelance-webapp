@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import newRequest from "../../utils/newRequest";
-import Review from "./Reviews";
+import Review from "../review/Review";
 import "./Reviews.scss";
 
 const Reviews = ({ gigId }) => {
@@ -33,6 +33,7 @@ const Reviews = ({ gigId }) => {
   return (
     <div className="reviews">
       <h2>Reviews</h2>
+
       {isLoading
         ? "loading"
         : error

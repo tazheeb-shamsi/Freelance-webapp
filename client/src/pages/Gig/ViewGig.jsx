@@ -53,7 +53,7 @@ const ViewGig = () => {
               <div className="user">
                 <img
                   className="pp"
-                  src={dataUser.image || "/img/noavatar.jpg"}
+                  src={dataUser.image || "/img/default.png"}
                   alt=""
                 />
                 <span>{dataUser.username}</span>
@@ -84,7 +84,7 @@ const ViewGig = () => {
               <div className="seller">
                 <h2>About The Seller</h2>
                 <div className="user">
-                  <img src={dataUser.image || "/img/noavatar.jpg"} alt="" />
+                  <img src={dataUser.image || "/img/default.png"} alt="" />
                   <div className="info">
                     <span>{dataUser.username}</span>
                     {!isNaN(data.totalStars / data.starNumber) && (
@@ -110,7 +110,7 @@ const ViewGig = () => {
                     </div>
                     <div className="item">
                       <span className="title">Member since</span>
-                      <span className="desc">Aug 2022</span>
+                      <span className="desc">Jan 2023</span>
                     </div>
                     <div className="item">
                       <span className="title">Avg. response time</span>

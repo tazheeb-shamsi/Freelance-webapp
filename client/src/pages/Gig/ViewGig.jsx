@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Slider } from "infinite-react-carousel/lib";
 import "./ViewGig.scss";
 import { Link, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import Reviews from "../../components/reviews/Reviews";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = {
+  display: "block",
+  margin: "3rem auto",
+  borderColor: "green",
+};
 
 const ViewGig = () => {
+  const [color, setColor] = useState("#ffffff");
   const { id } = useParams();
 
   const { isLoading, error, data } = useQuery({
@@ -35,7 +43,14 @@ const ViewGig = () => {
   return (
     <div className="gig">
       {isLoading ? (
-        "loading"
+        <ClipLoader
+          color={color}
+          loading={isLoading}
+          cssOverride={override}
+          size={80}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
       ) : error ? (
         "Something went wrong!"
       ) : (
@@ -135,7 +150,7 @@ const ViewGig = () => {
           <div className="right">
             <div className="price">
               <h3>{data.shortTitle}</h3>
-              <h2>$ {data.price}</h2>
+              <h2>₹ {data.price}</h2>
             </div>
             <p>{data.shortDesc}</p>
             <div className="details">
@@ -157,7 +172,7 @@ const ViewGig = () => {
               ))}
             </div>
             <Link to={`/pay/${id}`}>
-            <button>Continue</button>
+              <button>Continue</button>
             </Link>
           </div>
         </div>

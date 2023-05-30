@@ -4,8 +4,17 @@ import GigCard from "../../components/gigCard/GigCard";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import { useLocation } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = {
+  display: "block",
+  margin: "3rem auto",
+  borderColor: "green",
+};
 
 function GigList() {
+  const [color, setColor] = useState("#ffffff");
+
   const [sort, setSort] = useState("sales");
   const [open, setOpen] = useState(false);
   const minRef = useRef();
@@ -43,7 +52,9 @@ function GigList() {
   return (
     <div className="gigs">
       <div className="container">
-        <span className="breadcrumbs">Fiverr {">"} Graphics & Design {">"}</span>
+        <span className="breadcrumbs">
+          Fiverr {">"} Graphics & Design {">"}
+        </span>
         <h1>AI Artists</h1>
         <p>
           Explore the boundaries of art and technology with Fiverr's AI artists
@@ -74,11 +85,20 @@ function GigList() {
           </div>
         </div>
         <div className="cards">
-          {isLoading
-            ? "loading"
-            : error
-            ? "Something went wrong!"
-            : data.map((gig) => <GigCard key={gig._id} item={gig} />)}
+          {isLoading ? (
+            <ClipLoader
+              color={color}
+              loading={isLoading}
+              cssOverride={override}
+              size={80}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : error ? (
+            "Something went wrong!"
+          ) : (
+            data.map((gig) => <GigCard key={gig._id} item={gig} />)
+          )}
         </div>
       </div>
     </div>

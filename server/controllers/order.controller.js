@@ -3,14 +3,14 @@ import Order from "../models/order.model.js";
 import Gig from "../models/gig.model.js";
 import Stripe from "stripe";
 
-export const intent = async (req, res, next) => {
-  const stripe = new Stripe(process.env.STRIPE);
+export const intent = async (req, res) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
   const gig = await Gig.findById(req.params.id);
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount: gig.price * 100,
-    currency: "usd",
+    currency: "inr",
     automatic_payment_methods: {
       enabled: true,
     },

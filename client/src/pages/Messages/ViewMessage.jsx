@@ -1,13 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import "./ViewMessage.scss";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = {
+  display: "block",
+  margin: "3rem auto",
+  borderColor: "green",
+};
+
 const ViewMessage = () => {
   const { id } = useParams();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
+  const [color, setColor] = useState("#ffffff");
+  
   const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery({
@@ -43,7 +52,14 @@ const ViewMessage = () => {
           <Link to="/messages">Messages</Link> {">"} John Doe {">"}
         </span>
         {isLoading ? (
-          "Loading"
+          <ClipLoader
+            color={color}
+            loading={isLoading}
+            cssOverride={override}
+            size={80}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
         ) : error ? (
           "Error while loading messages"
         ) : (
@@ -53,10 +69,7 @@ const ViewMessage = () => {
                 className={m.userId === currentUser._id ? "owner item" : "item"}
                 key={m._id}
               >
-                <img
-                  src={currentUser.image}
-                  alt=""
-                />
+                <img src={currentUser.image} alt="" />
                 <p>{m.desc}</p>
               </div>
             ))}

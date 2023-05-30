@@ -1,12 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import "./MessageList.scss";
 import moment from "moment";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = {
+  display: "block",
+  margin: "3rem auto",
+  borderColor: "green",
+};
+
 const MessageList = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const [color, setColor] = useState("#ffffff");
 
   const queryClient = useQueryClient();
 
@@ -34,7 +44,14 @@ const MessageList = () => {
   return (
     <div className="messages">
       {isLoading ? (
-        "Loading..."
+        <ClipLoader
+          color={color}
+          loading={isLoading}
+          cssOverride={override}
+          size={80}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
       ) : error ? (
         "Error loading conversation"
       ) : (

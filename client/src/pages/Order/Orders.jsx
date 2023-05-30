@@ -1,10 +1,18 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Orders.scss";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = {
+  display: "block",
+  margin: "3rem auto",
+  borderColor: "green",
+};
 
 const Orders = () => {
+  const [color, setColor] = useState("#ffffff");
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const navigate = useNavigate();
@@ -36,9 +44,16 @@ const Orders = () => {
   return (
     <div className="orders">
       {isLoading ? (
-        "loading"
+        <ClipLoader
+          color={color}
+          loading={isLoading}
+          cssOverride={override}
+          size={80}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
       ) : error ? (
-        "Something went wrong!"
+        "error"
       ) : (
         <div className="container">
           <div className="title">
@@ -57,7 +72,7 @@ const Orders = () => {
                   <img className="image" src={order.img} alt="" />
                 </td>
                 <td>{order.title}</td>
-                <td>{order.price}</td>
+                <td>₹ {order.price}</td>
                 <td>
                   <img
                     className="message"

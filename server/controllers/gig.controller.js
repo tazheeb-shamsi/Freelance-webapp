@@ -12,6 +12,7 @@ export const createGig = async (req, res, next) => {
 
   try {
     const savedGig = await newGig.save();
+    console.log(savedGig, "Saved GIG---Controller saved");
     res.status(201).json(savedGig);
   } catch (err) {
     next(err);
@@ -30,7 +31,6 @@ export const deleteGig = async (req, res, next) => {
     next(err);
   }
 };
-
 export const getGig = async (req, res, next) => {
   try {
     const gig = await Gig.findById(req.params.id);
@@ -40,7 +40,6 @@ export const getGig = async (req, res, next) => {
     next(err);
   }
 };
-
 export const getGigs = async (req, res, next) => {
   const q = req.query;
   const filters = {

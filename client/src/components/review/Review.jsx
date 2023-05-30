@@ -11,7 +11,6 @@ const Review = ({ review }) => {
         return res.data;
       }),
   });
-  console.log(data, "REVIEW_DATA");
 
   return (
     <div className="review">

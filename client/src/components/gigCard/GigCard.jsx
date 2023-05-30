@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./GigCard.scss";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = {
+  display: "block",
+  margin: "3rem auto",
+  borderColor: "green",
+};
+
 const GigCard = ({ item }) => {
+  const [color, setColor] = useState("#ffffff");
+
   const { isLoading, error, data } = useQuery({
     queryKey: [item.userId],
     queryFn: () =>
@@ -18,7 +28,14 @@ const GigCard = ({ item }) => {
         <img src={item.coverImg} alt="" />
         <div className="info">
           {isLoading ? (
-            "loading"
+            <ClipLoader
+              color={color}
+              loading={isLoading}
+              cssOverride={override}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
           ) : error ? (
             "Something went wrong!"
           ) : (
@@ -41,7 +58,7 @@ const GigCard = ({ item }) => {
           <img src="./img/heart.png" alt="" />
           <div className="price">
             <span>STARTING AT</span>
-            <h2>$ {item.price}</h2>
+            <h2>₹ {item.price}</h2>
           </div>
         </div>
       </div>
